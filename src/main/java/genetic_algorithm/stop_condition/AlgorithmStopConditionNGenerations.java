@@ -5,25 +5,22 @@ import genetic_algorithm.Algorithm;
 public class AlgorithmStopConditionNGenerations implements AlgorithmStopCondition{
 
 	private Algorithm algorithm;
+	private int maxGenerations;
 	
 	
-	
-	public AlgorithmStopConditionNGenerations() {
+	public AlgorithmStopConditionNGenerations(int maxGenerations) {
+		this.maxGenerations = maxGenerations;
 	}
-	
-	
-	
+		
 	
 	@Override
 	public void setAlgorithm(Algorithm algorithm) {
-		// TODO Auto-generated method stub
-		
+		this.algorithm = algorithm;
 	}
 
 	@Override
 	public boolean hasToContinue() {
-		// TODO Auto-generated method stub
-		return false;
+		return algorithm.getGeneration() > maxGenerations;
 	}
 
 }

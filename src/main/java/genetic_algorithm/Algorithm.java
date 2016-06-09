@@ -1,20 +1,21 @@
 package genetic_algorithm;
 
+import genetic_algorithm.crossover.Crossover;
+import genetic_algorithm.mutation.Mutation;
 import genetic_algorithm.populator.CharacterChromosomePopulator;
 import genetic_algorithm.stop_condition.AlgorithmStopCondition;
 
-import java.lang.reflect.Array;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
 import model.chromosome.CharacterChromosome;
-import model.chromosome.Chromosome;
 
 public class Algorithm {
 
 	private AlgorithmStopCondition stopCondition;
 	private CharacterChromosomePopulator populator;
+	private Mutation mutation;
+	private Crossover crossover;
 
 	private List<CharacterChromosome> chromosomes;
 
@@ -22,10 +23,14 @@ public class Algorithm {
 	private int generation;
 
 	public Algorithm(CharacterChromosomePopulator populator,
-			AlgorithmStopCondition stopCondition) {
+			AlgorithmStopCondition stopCondition, Mutation mutation,
+			Crossover crossover) {
 		super();
 		this.generation = 1;
 		this.populator = populator;
+		this.mutation = mutation;
+		this.crossover = crossover;
+		this.crossover.setAlgorithm(this);
 		this.stopCondition = stopCondition;
 		this.stopCondition.setAlgorithm(this);
 	}
@@ -46,6 +51,10 @@ public class Algorithm {
 		}
 
 		return null;
+	}
+
+	public Mutation getMutation() {
+		return mutation;
 	}
 
 	public int getGeneration() {

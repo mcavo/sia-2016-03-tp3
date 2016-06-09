@@ -12,8 +12,10 @@ import config.Configuration;
 
 public class CharacterChromosome implements Chromosome, Comparable<CharacterChromosome> {
 
-	private static int HEIGHT_INDEX = 5;
+	public static int HEIGHT_INDEX = 5;
 	private static double EPSILON = 1E-1;
+	private static double MIN_HEIGHT = 1.3;
+	private static double MAX_HEIGHT = 2.0;
 	
 	private Double fitness;
 
@@ -25,6 +27,12 @@ public class CharacterChromosome implements Chromosome, Comparable<CharacterChro
 		this.genes = genes;
 		calculateFitness();
 	}
+	
+	public List<Double> getGenes() {
+		return genes;
+	}
+
+
 
 	public Double fitness(){
 		return fitness;
@@ -47,5 +55,20 @@ public class CharacterChromosome implements Chromosome, Comparable<CharacterChro
 	@Override
 	public int compareTo(CharacterChromosome o) {
 		return -(fitness().compareTo(o.fitness()));
+	}
+
+	public static CharacterChromosome getRandomChromosome() {
+		ItemsRepo itemsRepo = ItemsRepo.getInstance();
+		double height = getRandomHeight();
+		List<Double> genes = new ArrayList<>();
+		for(ItemType itemType : ItemType.values()){
+			genes.add(itemsRepo.getRandomIndex(itemType));
+		}
+		genes.add(height);
+		return new CharacterChromosome(genes);
+	}
+	
+	public static double getRandomHeight(){
+		return Math.random()*(MAX_HEIGHT - MIN_HEIGHT) + MIN_HEIGHT;
 	}
 }
