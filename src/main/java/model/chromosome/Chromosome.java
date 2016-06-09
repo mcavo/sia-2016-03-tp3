@@ -1,5 +1,5 @@
 package model.chromosome;
 
 public interface Chromosome {
-	public double fitness();
+	public Double fitness();
 }
