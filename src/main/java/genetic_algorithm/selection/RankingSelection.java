@@ -2,6 +2,8 @@ package genetic_algorithm.selection;
 
 import genetic_algorithm.Algorithm;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import model.chromosome.CharacterChromosome;
@@ -10,8 +12,12 @@ public class RankingSelection implements Selection {
 
 	private Algorithm algorithm;
 	
+	private List<Double> orders;
+	private double fitnessSum;
+	
+	
 	public RankingSelection() {
-		// TODO Auto-generated constructor stub
+		orders = new ArrayList<>();
 	}
 	
 	@Override
@@ -21,14 +27,28 @@ public class RankingSelection implements Selection {
 
 	@Override
 	public void initialize() {
-		// TODO Auto-generated method stub
-
+		fitnessSum = 0;
+		int size = algorithm.getChromosomes().size();
+		Collections.sort(algorithm.getChromosomes());
+		orders.clear();
+		for(int i=0; i<size ;i++){
+			fitnessSum += size - i + 1;
+			orders.add(fitnessSum);
+		}
 	}
 
 	@Override
 	public List<CharacterChromosome> select(int n) {
-		// TODO Auto-generated method stub
-		return null;
+		List<CharacterChromosome> selection = new ArrayList<>();
+		for(int i=1; i<=n; i++){
+			double r = Math.random()*fitnessSum;
+			int j=0;
+			while(orders.get(j)>r){
+				j++;
+			}
+			selection.add(algorithm.getChromosomes().get(j));
+		}
+		return selection;
 	}
 
 }

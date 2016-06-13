@@ -2,6 +2,7 @@ package genetic_algorithm.selection;
 
 import genetic_algorithm.Algorithm;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import model.chromosome.CharacterChromosome;
@@ -28,14 +29,20 @@ public class CompoundSelection implements Selection {
 
 	@Override
 	public void initialize() {
-		// TODO Auto-generated method stub
+		method1.initialize();
+		method2.initialize();
 
 	}
 
 	@Override
 	public List<CharacterChromosome> select(int n) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		List<CharacterChromosome> selection;
+		int method1Amount =(int)(n*a);
+		int method2Amount = n - method1Amount;
+		selection = method1.select(method1Amount);
+		selection.addAll(method2.select(method2Amount));
+		return selection;
 	}
 
 

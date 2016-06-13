@@ -113,7 +113,6 @@ public class ItemsRepo {
 			sc.nextLine();
 			int i = 0;
 			while(sc.hasNextInt()){
-				System.out.println(i++);
 				sc.nextInt();
 				switch(itemType){
 				case BOOTS:

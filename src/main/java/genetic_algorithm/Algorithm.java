@@ -5,6 +5,7 @@ import genetic_algorithm.mutation.Mutation;
 import genetic_algorithm.populator.CharacterChromosomePopulator;
 import genetic_algorithm.selection.Selection;
 import genetic_algorithm.stop_condition.AlgorithmStopCondition;
+import genetic_algorithm.substitution.Substitution;
 
 import java.util.Collections;
 import java.util.List;
@@ -18,6 +19,7 @@ public class Algorithm {
 	private Mutation mutation;
 	private Selection selection;
 	private Crossover crossover;
+	private Substitution substitution;
 
 	private List<CharacterChromosome> chromosomes;
 
@@ -26,7 +28,7 @@ public class Algorithm {
 
 	public Algorithm(CharacterChromosomePopulator populator,
 			AlgorithmStopCondition stopCondition, Mutation mutation,
-			Crossover crossover, Selection selection) {
+			Crossover crossover, Selection selection, Substitution substitution) {
 		super();
 		this.generation = 1;
 		this.populator = populator;
@@ -37,6 +39,8 @@ public class Algorithm {
 		this.crossover.setAlgorithm(this);
 		this.stopCondition = stopCondition;
 		this.stopCondition.setAlgorithm(this);
+		this.substitution = substitution;
+		this.substitution.setAlgorithm(this);
 	}
 
 	public CharacterChromosome run() {
@@ -47,17 +51,20 @@ public class Algorithm {
 		bestChromosome = chromosomes.get(0);
 
 		while (stopCondition.hasToContinue()) {
-			// SELECCIONO PARA REPRODUCIR
-			// LOS CRUZO ( VEO DE MUTAR HIJOS )
-			// EVALUO FITNESS DE LOS NUEVOS
-			// FILTRO PARA NUEVA GENERACION
+			Collections.sort(chromosomes);
+			bestChromosome = chromosomes.get(0);
+			chromosomes = substitution.substitute();
 			generation++;
 		}
 
-		return null;
+		return bestChromosome;
 	}
 	
-	public Selection getSelection(){
+	public Crossover getCrossover(){
+		return crossover;
+	}
+
+	public Selection getSelection() {
 		return selection;
 	}
 
@@ -75,6 +82,10 @@ public class Algorithm {
 
 	public CharacterChromosome getBestChromosome() {
 		return bestChromosome;
+	}
+
+	public void setChromosomes(List<CharacterChromosome> chromosomes) {
+		this.chromosomes = chromosomes;
 	}
 
 }

@@ -2,6 +2,7 @@ package genetic_algorithm.selection;
 
 import genetic_algorithm.Algorithm;
 
+import java.util.Collections;
 import java.util.List;
 
 import model.chromosome.CharacterChromosome;
@@ -21,14 +22,12 @@ public class EliteSelection implements Selection {
 
 	@Override
 	public void initialize() {
-		// TODO Auto-generated method stub
-
+		Collections.sort(algorithm.getChromosomes());
 	}
 
 	@Override
 	public List<CharacterChromosome> select(int n) {
-		// TODO Auto-generated method stub
-		return null;
+		return algorithm.getChromosomes().subList(0, n);
 	}
 
 }

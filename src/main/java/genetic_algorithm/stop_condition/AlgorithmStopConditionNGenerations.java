@@ -20,7 +20,7 @@ public class AlgorithmStopConditionNGenerations implements AlgorithmStopConditio
 
 	@Override
 	public boolean hasToContinue() {
-		return algorithm.getGeneration() > maxGenerations;
+		return algorithm.getGeneration() < maxGenerations;
 	}
 
 }

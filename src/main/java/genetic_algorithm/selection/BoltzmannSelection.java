@@ -2,16 +2,23 @@ package genetic_algorithm.selection;
 
 import genetic_algorithm.Algorithm;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import model.chromosome.CharacterChromosome;
 
 public class BoltzmannSelection implements Selection {
 
+	private double fitnessSum;
+	private List<Double> orders;
+	
+	private double t;
+	
 	private Algorithm algorithm;
 	
-	public BoltzmannSelection() {
-		// TODO Auto-generated constructor stub
+	public BoltzmannSelection(double t) {
+		this.t = t;
 	}
 	
 	@Override
@@ -21,14 +28,32 @@ public class BoltzmannSelection implements Selection {
 
 	@Override
 	public void initialize() {
-		// TODO Auto-generated method stub
-
+		fitnessSum = 0;
+		Collections.sort(algorithm.getChromosomes());
+		orders.clear();
+		for(CharacterChromosome chromosome : algorithm.getChromosomes()){
+			fitnessSum += Math.exp(chromosome.fitness()/t);
+			orders.add(fitnessSum);
+		}
+		t--;
+		if(t<1){
+			t=1;
+		}
 	}
 
 	@Override
 	public List<CharacterChromosome> select(int n) {
-		// TODO Auto-generated method stub
-		return null;
+		List<CharacterChromosome> selection = new ArrayList<>();
+
+		for(int i=1; i<=n; i++){
+			double r = Math.random()*fitnessSum;
+			int j=0;
+			while(orders.get(j)>r){
+				j++;
+			}
+			selection.add(algorithm.getChromosomes().get(j));
+		}
+		return selection;
 	}
 
 }

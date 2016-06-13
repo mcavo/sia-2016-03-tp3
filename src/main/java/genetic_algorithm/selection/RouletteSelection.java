@@ -2,6 +2,8 @@ package genetic_algorithm.selection;
 
 import genetic_algorithm.Algorithm;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import model.chromosome.CharacterChromosome;
@@ -10,8 +12,11 @@ public class RouletteSelection implements Selection {
 
 	private Algorithm algorithm;
 	
+	private List<Double> orders;
+	private double fitnessSum;
+	
 	public RouletteSelection() {
-		// TODO Auto-generated constructor stub
+		orders = new ArrayList<>();
 	}
 	
 	@Override
@@ -21,14 +26,28 @@ public class RouletteSelection implements Selection {
 
 	@Override
 	public void initialize() {
-		// TODO Auto-generated method stub
-
+		fitnessSum = 0;
+		Collections.sort(algorithm.getChromosomes());
+		orders.clear();
+		for(CharacterChromosome chromosome : algorithm.getChromosomes()){
+			fitnessSum += chromosome.fitness();
+			orders.add(fitnessSum);
+		}
 	}
 
 	@Override
 	public List<CharacterChromosome> select(int n) {
-		// TODO Auto-generated method stub
-		return null;
+		List<CharacterChromosome> selection = new ArrayList<>();
+
+		for(int i=1; i<=n; i++){
+			double r = Math.random()*fitnessSum;
+			int j=0;
+			while(j<orders.size()-1 && orders.get(j)>r){
+				j++;
+			}
+			selection.add(algorithm.getChromosomes().get(j));
+		}
+		return selection;
 	}
 
 }

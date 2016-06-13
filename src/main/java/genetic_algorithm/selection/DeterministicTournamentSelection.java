@@ -2,16 +2,19 @@ package genetic_algorithm.selection;
 
 import genetic_algorithm.Algorithm;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import model.chromosome.CharacterChromosome;
 
 public class DeterministicTournamentSelection implements Selection{
 	
+	int m;
+	
 	private Algorithm algorithm;
 	
-	public DeterministicTournamentSelection() {
-		// TODO Auto-generated constructor stub
+	public DeterministicTournamentSelection(int m) {
+		this.m = m;
 	}
 	
 	@Override
@@ -27,7 +30,25 @@ public class DeterministicTournamentSelection implements Selection{
 
 	@Override
 	public List<CharacterChromosome> select(int n) {
-		// TODO Auto-generated method stub
-		return null;
+		List<CharacterChromosome> selection = new ArrayList<>();
+		int size = algorithm.getChromosomes().size();
+		for(int i=0; i<n; i++){
+			
+			List<CharacterChromosome> fight = new ArrayList<>();
+			for(int j=0; j<m; j++){
+				int rand =(int)(Math.random()*size);				
+				fight.add(algorithm.getChromosomes().get(rand));
+			}
+			
+			int index = 0;
+			for(int j=0; j<m; j++){
+				if(fight.get(j).fitness()>fight.get(j).fitness()){
+					index = j;
+				}
+			}
+			selection.add(fight.get(index));
+		}
+		return selection;
+		
 	}
 }
