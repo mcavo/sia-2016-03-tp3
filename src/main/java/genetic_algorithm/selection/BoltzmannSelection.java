@@ -19,6 +19,7 @@ public class BoltzmannSelection implements Selection {
 	
 	public BoltzmannSelection(double t) {
 		this.t = t;
+		orders = new ArrayList<>();
 	}
 	
 	@Override
@@ -48,7 +49,7 @@ public class BoltzmannSelection implements Selection {
 		for(int i=1; i<=n; i++){
 			double r = Math.random()*fitnessSum;
 			int j=0;
-			while(orders.get(j)>r){
+			while(j < orders.size()-1 && orders.get(j)>r){
 				j++;
 			}
 			selection.add(algorithm.getChromosomes().get(j));

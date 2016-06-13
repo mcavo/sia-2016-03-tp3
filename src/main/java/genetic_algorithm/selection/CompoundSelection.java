@@ -25,6 +25,8 @@ public class CompoundSelection implements Selection {
 	@Override
 	public void setAlgorithm(Algorithm algorithm) {
 		this.algorithm = algorithm;
+		method1.setAlgorithm(algorithm);
+		method2.setAlgorithm(algorithm);
 	}
 
 	@Override

@@ -43,7 +43,7 @@ public class UniversalSelection implements Selection {
 		int j=0;
 		for(int i=1; i<=n; i++){
 			double rj = (r+i-1)/n;
-			while(orders.get(j)>rj){
+			while(j < orders.size()-1 && orders.get(j)>rj){
 				j++;
 			}
 			selection.add(algorithm.getChromosomes().get(j));

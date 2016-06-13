@@ -8,10 +8,6 @@ import model.item.ItemType;
 import repo.ItemsRepo;
 
 public class CharacterChromosomePopulatorN implements CharacterChromosomePopulator {
-
-	
-
-	
 	
 	private int n;
 
