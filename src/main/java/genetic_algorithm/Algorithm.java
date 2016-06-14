@@ -42,7 +42,6 @@ public class Algorithm {
 	public CharacterChromosome run() {
 
 		chromosomes = populator.getInitialPopulation();
-		System.out.println(chromosomes.size());
 		this.selection.setAlgorithm(this);
 		this.substitution.setAlgorithm(this);
 		this.crossover.setAlgorithm(this);
@@ -58,7 +57,6 @@ public class Algorithm {
 			}
 			chromosomes = substitution.substitute();
 			generation++;
-			System.out.println(chromosomes.size());
 		}
 
 		return bestChromosome;

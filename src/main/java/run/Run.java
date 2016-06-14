@@ -21,6 +21,7 @@ import genetic_algorithm.selection.RouletteSelection;
 import genetic_algorithm.selection.Selection;
 import genetic_algorithm.selection.UniversalSelection;
 import genetic_algorithm.stop_condition.AlgorithmStopCondition;
+import genetic_algorithm.stop_condition.AlgorithmStopConditionContent;
 import genetic_algorithm.stop_condition.AlgorithmStopConditionNGenerations;
 import genetic_algorithm.substitution.Substitution;
 import genetic_algorithm.substitution.Substitution1;
@@ -186,6 +187,9 @@ public class Run {
 		switch(type){
 		case "NGenerations" :
 			stopCondition = new AlgorithmStopConditionNGenerations( (Integer.valueOf(parameter)));
+			break;
+		case "Content" :
+			stopCondition = new AlgorithmStopConditionContent((Integer.valueOf(parameter)));
 			break;
 		}
 		Substitution substitution = null;
