@@ -23,6 +23,7 @@ import genetic_algorithm.selection.UniversalSelection;
 import genetic_algorithm.stop_condition.AlgorithmStopCondition;
 import genetic_algorithm.stop_condition.AlgorithmStopConditionContent;
 import genetic_algorithm.stop_condition.AlgorithmStopConditionNGenerations;
+import genetic_algorithm.stop_condition.AlgorithmStopConditionNearOptimum;
 import genetic_algorithm.substitution.Substitution;
 import genetic_algorithm.substitution.Substitution1;
 import genetic_algorithm.substitution.Substitution2;
@@ -191,6 +192,8 @@ public class Run {
 		case "Content" :
 			stopCondition = new AlgorithmStopConditionContent((Integer.valueOf(parameter)));
 			break;
+		case "NearOptimum" :
+			stopCondition = new AlgorithmStopConditionNearOptimum(Double.valueOf(parameter));
 		}
 		Substitution substitution = null;
 		Selection substitutionSelection = null;
@@ -301,9 +304,8 @@ public class Run {
 		Algorithm algorithm = new Algorithm(populator, stopCondition, mutation,
 				crossover, selection, substitution);
 		CharacterChromosome ans = algorithm.run();
-		System.out.println(ans.getGenes());
-		System.out.println(ans.fitness());
-
+		System.out.println("Character : " + ans.getGenes());
+		System.out.println("Fitness : " + ans.fitness());
 	}
 
 }
