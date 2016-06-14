@@ -34,27 +34,31 @@ public class Algorithm {
 		this.populator = populator;
 		this.mutation = mutation;
 		this.selection = selection;
-		this.selection.setAlgorithm(this);
-		this.crossover = crossover;
-		this.crossover.setAlgorithm(this);
-		this.stopCondition = stopCondition;
-		this.stopCondition.setAlgorithm(this);
+		this.crossover = crossover;		
+		this.stopCondition = stopCondition;		
 		this.substitution = substitution;
-		this.substitution.setAlgorithm(this);
 	}
 
 	public CharacterChromosome run() {
 
 		chromosomes = populator.getInitialPopulation();
+		System.out.println(chromosomes.size());
+		this.selection.setAlgorithm(this);
+		this.substitution.setAlgorithm(this);
+		this.crossover.setAlgorithm(this);
+		this.stopCondition.setAlgorithm(this);
 
 		Collections.sort(chromosomes);
 		bestChromosome = chromosomes.get(0);
 
 		while (stopCondition.hasToContinue()) {
 			Collections.sort(chromosomes);
-			bestChromosome = chromosomes.get(0);
+			if(bestChromosome.fitness()< chromosomes.get(0).fitness()){
+				bestChromosome = chromosomes.get(0);				
+			}
 			chromosomes = substitution.substitute();
 			generation++;
+			System.out.println(chromosomes.size());
 		}
 
 		return bestChromosome;

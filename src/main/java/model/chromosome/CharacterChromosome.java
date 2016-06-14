@@ -1,5 +1,6 @@
 package model.chromosome;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
