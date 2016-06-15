@@ -9,11 +9,11 @@ import model.item.ItemType;
 
 public class NotUniformMutation implements Mutation {
 
-	//Chance for a gene in a chromoson to mutate
-	private double pg;
+	//Chance for a gene in a chromosome to mutate
+	private double pm;
 	
-	public NotUniformMutation(double pg) {
-		this.pg = pg;
+	public NotUniformMutation(double pm) {
+		this.pm = pm;
 	}
 	
 	@Override
@@ -22,13 +22,13 @@ public class NotUniformMutation implements Mutation {
 		List<Double> sampleGenes = chromosome.getGenes();
 		List<Double> mutationGenes = new ArrayList<>();
 		for(ItemType itemType : ItemType.values()){
-			if(Math.random()<pg){
+			if(Math.random()<pm){
 				mutationGenes.add(itemsRepo.getRandomIndex(itemType));
 			}else{
 				mutationGenes.add(sampleGenes.get(itemType.ordinal()));
 			}
 		}
-		if(Math.random()<pg){
+		if(Math.random()<pm){
 			mutationGenes.add(CharacterChromosome.getRandomHeight());
 		} else {
 			mutationGenes.add(sampleGenes.get(CharacterChromosome.HEIGHT_INDEX));
