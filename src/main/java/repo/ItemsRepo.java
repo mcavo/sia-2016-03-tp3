@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Scanner;
 
 import model.item.Boots;
@@ -109,9 +110,8 @@ public class ItemsRepo {
 		File file = new File(FileManager.DATA_PATH+"/"+filename);
 		List<Item> items = new ArrayList<>();
 		try {
-			Scanner sc = new Scanner(file);
+			Scanner sc = new Scanner(file).useLocale(Locale.US);;
 			sc.nextLine();
-			int i = 0;
 			while(sc.hasNextInt()){
 				sc.nextInt();
 				switch(itemType){
