@@ -93,11 +93,11 @@ public abstract class Character {
 		return Math.tanh(0.01*itemResistanse*resistanceItemModifier);
 	}
 	
-	private double getAttack(){
+	public double getAttack(){
 		return (getAgility() + getExpertise()) * getStrength() * getItemAttackModifier();
 	}
 
-	private double getDefense(){
+	public double getDefense(){
 		return (getResistanse() + getExpertise()) * getLife() * getItemDefenseModifier();
 	}
 	

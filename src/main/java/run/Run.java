@@ -304,8 +304,7 @@ public class Run {
 		Algorithm algorithm = new Algorithm(populator, stopCondition, mutation,
 				crossover, selection, substitution);
 		CharacterChromosome ans = algorithm.run();
-		System.out.println("Character : " + ans.getGenes());
-		System.out.println("Fitness : " + ans.fitness());
+		System.out.println(ans);
 	}
 
 }

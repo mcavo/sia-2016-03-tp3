@@ -72,4 +72,28 @@ public class CharacterChromosome implements Chromosome, Comparable<CharacterChro
 	public static double getRandomHeight(){
 		return Math.random()*(MAX_HEIGHT - MIN_HEIGHT) + MIN_HEIGHT;
 	}
+	
+	public String toString() {
+		String ret = "Rol: " + Configuration.DEFAULT_CLASS + "\n\n";
+		ret += "Equipment:\n";
+		for (ItemType item : ItemType.values()) {
+			ret += "\t" + item.name() + ":\t" + genes.get(item.ordinal()) + "\n";
+		}
+		
+		ItemsRepo itemsRepo = ItemsRepo.getInstance();
+		List<Item> equipment = new ArrayList<>();
+		for (ItemType itemType : ItemType.values()) {
+			equipment.add(itemsRepo.get(itemType,
+					(int) (genes.get(itemType.ordinal()) + EPSILON)));
+		}
+		Character character = CharacterFactory
+				.create(Configuration.DEFAULT_CLASS, genes.get(HEIGHT_INDEX),
+						equipment);
+		
+		ret += "\nStats:";
+		ret += "\n\tAttack:\t" + character.getAttack();
+		ret += "\n\tDefense: " + character.getDefense();
+		ret+= "\n\nFitness: " + fitness;
+		return ret;
+	}
 }
