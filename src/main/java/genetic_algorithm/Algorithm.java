@@ -11,6 +11,7 @@ import java.util.Collections;
 import java.util.List;
 
 import model.chromosome.CharacterChromosome;
+import utils.ErrorDispersion;
 
 public class Algorithm {
 
@@ -20,6 +21,7 @@ public class Algorithm {
 	private Selection selection;
 	private Crossover crossover;
 	private Substitution substitution;
+	private double diversity;
 
 	private List<CharacterChromosome> chromosomes;
 
@@ -50,6 +52,8 @@ public class Algorithm {
 		Collections.sort(chromosomes);
 		bestChromosome = chromosomes.get(0);
 
+		refreshDiversity();
+		
 		while (stopCondition.hasToContinue()) {
 			Collections.sort(chromosomes);
 			if(bestChromosome.fitness()< chromosomes.get(0).fitness()){
@@ -57,11 +61,51 @@ public class Algorithm {
 			}
 			chromosomes = substitution.substitute();
 			generation++;
+			refreshDiversity();
 		}
 
 		return bestChromosome;
 	}
 	
+	public double getDiversity() {
+		return diversity;
+	}
+
+	private void refreshDiversity() {
+		
+		double strengthDiv[] = new double[chromosomes.size()];
+		double expertiseDiv[] = new double[chromosomes.size()];
+		double agilityDiv[] = new double[chromosomes.size()];
+		double lifeDiv[] = new double[chromosomes.size()];
+		double resistanseDiv[] = new double[chromosomes.size()];
+		double heightDiv[] = new double[chromosomes.size()];
+		for(int i = 0 ; i < chromosomes.size() ; i++) {
+			strengthDiv[i] = chromosomes.get(i).getStrength();
+			expertiseDiv[i] = chromosomes.get(i).getExpertise();
+			agilityDiv[i] = chromosomes.get(i).getAgility();
+			lifeDiv[i] = chromosomes.get(i).getLife();
+			resistanseDiv[i] = chromosomes.get(i).getResistanse();
+			heightDiv[i] = chromosomes.get(i).getHeight();
+		}
+		ErrorDispersion strengthDisp = new ErrorDispersion(strengthDiv);
+		ErrorDispersion expertiseDisp = new ErrorDispersion(expertiseDiv);
+		ErrorDispersion agilityDisp = new ErrorDispersion(agilityDiv);
+		ErrorDispersion lifeDisp = new ErrorDispersion(lifeDiv);
+		ErrorDispersion resistanseDisp = new ErrorDispersion(resistanseDiv);
+		ErrorDispersion heightDisp = new ErrorDispersion(heightDiv);
+		
+		diversity = strengthDisp.getStdDev() / strengthDisp.getMean();
+		diversity += expertiseDisp.getStdDev() / expertiseDisp.getMean();
+		diversity += agilityDisp.getStdDev() / agilityDisp.getMean();
+		diversity += lifeDisp.getStdDev() / lifeDisp.getMean();
+		diversity += resistanseDisp.getStdDev() / resistanseDisp.getMean();
+		diversity += heightDisp.getStdDev() / heightDisp.getMean();
+		
+		diversity /= 6;
+		
+		System.out.println(diversity);
+	}
+
 	public Crossover getCrossover(){
 		return crossover;
 	}
@@ -89,5 +133,7 @@ public class Algorithm {
 	public void setChromosomes(List<CharacterChromosome> chromosomes) {
 		this.chromosomes = chromosomes;
 	}
+	
+	
 
 }

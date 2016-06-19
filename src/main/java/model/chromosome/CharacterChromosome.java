@@ -1,15 +1,14 @@
 package model.chromosome;
 
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import model.character.*;
+import config.Configuration;
 import model.character.Character;
+import model.character.CharacterFactory;
 import model.item.Item;
 import model.item.ItemType;
 import repo.ItemsRepo;
-import config.Configuration;
 
 public class CharacterChromosome implements Chromosome, Comparable<CharacterChromosome> {
 
@@ -17,6 +16,8 @@ public class CharacterChromosome implements Chromosome, Comparable<CharacterChro
 	private static double EPSILON = 1E-1;
 	private static double MIN_HEIGHT = 1.3;
 	private static double MAX_HEIGHT = 2.0;
+	
+	private static Character character;
 	
 	private Double fitness;
 
@@ -46,7 +47,7 @@ public class CharacterChromosome implements Chromosome, Comparable<CharacterChro
 			equipment.add(itemsRepo.get(itemType,
 					(int) (genes.get(itemType.ordinal()) + EPSILON)));
 		}
-		Character character = CharacterFactory
+		character = CharacterFactory
 				.create(Configuration.DEFAULT_CLASS, genes.get(HEIGHT_INDEX),
 						equipment);
 		fitness = character.getPerformance();
@@ -79,23 +80,37 @@ public class CharacterChromosome implements Chromosome, Comparable<CharacterChro
 		for (ItemType item : ItemType.values()) {
 			ret += "\t" + item.name() + ":\t" + genes.get(item.ordinal()) + "\n";
 		}
-		
-		ItemsRepo itemsRepo = ItemsRepo.getInstance();
-		List<Item> equipment = new ArrayList<>();
-		for (ItemType itemType : ItemType.values()) {
-			equipment.add(itemsRepo.get(itemType,
-					(int) (genes.get(itemType.ordinal()) + EPSILON)));
-		}
-		Character character = CharacterFactory
-				.create(Configuration.DEFAULT_CLASS, genes.get(HEIGHT_INDEX),
-						equipment);
-		
 		ret += "\nHeight: " + genes.get(HEIGHT_INDEX);
-		
 		ret += "\n\nStats:";
 		ret += "\n\tAttack:\t" + character.getAttack();
 		ret += "\n\tDefense: " + character.getDefense();
 		ret+= "\n\nFitness: " + fitness;
 		return ret;
+	}
+	
+	public double getStrength() {
+		return character.getStrength();
+	}
+
+
+	public double getExpertise() {
+		return character.getExpertise();
+	}
+
+
+	public double getAgility() {
+		return character.getAgility();
+	}
+
+	public double getLife() {
+		return character.getLife();
+	}
+
+	public double getResistanse() {
+		return character.getResistanse();
+	}
+	
+	public double getHeight() {
+		return genes.get(HEIGHT_INDEX);
 	}
 }

@@ -71,25 +71,25 @@ public abstract class Character {
 	}
 	
 	
-	private double getStrength() {
+	public double getStrength() {
 		return 100*Math.tanh(0.01*itemStrenght*strengthItemModifier);
 	}
 
 
-	private double getExpertise() {
+	public double getExpertise() {
 		return 0.6*Math.tanh(0.01*itemExpertise*expertiseItemModifier);
 	}
 
 
-	private double getAgility() {
+	public double getAgility() {
 		return Math.tanh(0.01*itemAgility*agilityItemModifier);
 	}
 
-	private double getLife() {
+	public double getLife() {
 		return 100*Math.tanh(0.01*itemLife*lifeItemModifier);
 	}
 
-	private double getResistanse() {
+	public double getResistanse() {
 		return Math.tanh(0.01*itemResistanse*resistanceItemModifier);
 	}
 	
