@@ -1,5 +1,10 @@
 package run;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
+
+import config.Configuration;
 import genetic_algorithm.Algorithm;
 import genetic_algorithm.crossover.AnularCrossover;
 import genetic_algorithm.crossover.Crossover;
@@ -24,17 +29,12 @@ import genetic_algorithm.stop_condition.AlgorithmStopCondition;
 import genetic_algorithm.stop_condition.AlgorithmStopConditionContent;
 import genetic_algorithm.stop_condition.AlgorithmStopConditionNGenerations;
 import genetic_algorithm.stop_condition.AlgorithmStopConditionNearOptimum;
+import genetic_algorithm.stop_condition.AlgorithmStopConditionStructure;
 import genetic_algorithm.substitution.Substitution;
 import genetic_algorithm.substitution.Substitution1;
 import genetic_algorithm.substitution.Substitution2;
 import genetic_algorithm.substitution.Substitution3;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Properties;
-
 import model.chromosome.CharacterChromosome;
-import config.Configuration;
 
 public class Run {
 	
@@ -194,6 +194,8 @@ public class Run {
 			break;
 		case "NearOptimum" :
 			stopCondition = new AlgorithmStopConditionNearOptimum(Double.valueOf(parameter));
+		case "Structure" :
+			stopCondition = new AlgorithmStopConditionStructure(Double.valueOf(parameter));
 		}
 		Substitution substitution = null;
 		Selection substitutionSelection = null;
