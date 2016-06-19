@@ -90,7 +90,9 @@ public class CharacterChromosome implements Chromosome, Comparable<CharacterChro
 				.create(Configuration.DEFAULT_CLASS, genes.get(HEIGHT_INDEX),
 						equipment);
 		
-		ret += "\nStats:";
+		ret += "\nHeight: " + genes.get(HEIGHT_INDEX);
+		
+		ret += "\n\nStats:";
 		ret += "\n\tAttack:\t" + character.getAttack();
 		ret += "\n\tDefense: " + character.getDefense();
 		ret+= "\n\nFitness: " + fitness;
