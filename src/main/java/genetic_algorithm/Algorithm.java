@@ -1,16 +1,16 @@
 package genetic_algorithm;
 
+import java.util.Collections;
+import java.util.List;
+
 import genetic_algorithm.crossover.Crossover;
 import genetic_algorithm.mutation.Mutation;
 import genetic_algorithm.populator.CharacterChromosomePopulator;
 import genetic_algorithm.selection.Selection;
 import genetic_algorithm.stop_condition.AlgorithmStopCondition;
 import genetic_algorithm.substitution.Substitution;
-
-import java.util.Collections;
-import java.util.List;
-
 import model.chromosome.CharacterChromosome;
+import model.data.Data;
 import utils.ErrorDispersion;
 
 public class Algorithm {
@@ -21,27 +21,24 @@ public class Algorithm {
 	private Selection selection;
 	private Crossover crossover;
 	private Substitution substitution;
-	private double diversity;
+	private Data data;
 
 	private List<CharacterChromosome> chromosomes;
-
-	private CharacterChromosome bestChromosome;
-	private int generation;
 
 	public Algorithm(CharacterChromosomePopulator populator,
 			AlgorithmStopCondition stopCondition, Mutation mutation,
 			Crossover crossover, Selection selection, Substitution substitution) {
 		super();
-		this.generation = 1;
 		this.populator = populator;
 		this.mutation = mutation;
 		this.selection = selection;
 		this.crossover = crossover;		
 		this.stopCondition = stopCondition;		
 		this.substitution = substitution;
+		this.data = new Data();
 	}
 
-	public CharacterChromosome run() {
+	public Data run() {
 
 		chromosomes = populator.getInitialPopulation();
 		this.selection.setAlgorithm(this);
@@ -50,28 +47,30 @@ public class Algorithm {
 		this.stopCondition.setAlgorithm(this);
 
 		Collections.sort(chromosomes);
-		bestChromosome = chromosomes.get(0);
-
-		refreshDiversity();
+		
+		data.setBestChromosome(chromosomes.get(0));
+		data.addDiversityValue(refreshDiversity());
+		data.addFitnessValue(chromosomes.get(0).fitness());
 		
 		while (stopCondition.hasToContinue()) {
 			Collections.sort(chromosomes);
-			if(bestChromosome.fitness()< chromosomes.get(0).fitness()){
-				bestChromosome = chromosomes.get(0);				
+			if(data.getBestChromosome().fitness()< chromosomes.get(0).fitness()){
+				data.setBestChromosome(chromosomes.get(0));
 			}
+			data.addFitnessValue(data.getBestChromosome().fitness());
 			chromosomes = substitution.substitute();
-			generation++;
-			refreshDiversity();
+			data.addGeneration();
+			data.addDiversityValue(refreshDiversity());
 		}
 
-		return bestChromosome;
+		return data;
 	}
 	
 	public double getDiversity() {
-		return diversity;
+		return data.getDiversity().get(data.getDiversity().size()-1);
 	}
 
-	private void refreshDiversity() {
+	private double refreshDiversity() {
 		
 		double strengthDiv[] = new double[chromosomes.size()];
 		double expertiseDiv[] = new double[chromosomes.size()];
@@ -94,16 +93,14 @@ public class Algorithm {
 		ErrorDispersion resistanseDisp = new ErrorDispersion(resistanseDiv);
 		ErrorDispersion heightDisp = new ErrorDispersion(heightDiv);
 		
-		diversity = strengthDisp.getStdDev() / strengthDisp.getMean();
-		diversity += expertiseDisp.getStdDev() / expertiseDisp.getMean();
-		diversity += agilityDisp.getStdDev() / agilityDisp.getMean();
-		diversity += lifeDisp.getStdDev() / lifeDisp.getMean();
-		diversity += resistanseDisp.getStdDev() / resistanseDisp.getMean();
-		diversity += heightDisp.getStdDev() / heightDisp.getMean();
+		double ret = strengthDisp.getStdDev() / strengthDisp.getMean();
+		ret += expertiseDisp.getStdDev() / expertiseDisp.getMean();
+		ret += agilityDisp.getStdDev() / agilityDisp.getMean();
+		ret += lifeDisp.getStdDev() / lifeDisp.getMean();
+		ret += resistanseDisp.getStdDev() / resistanseDisp.getMean();
+		ret += heightDisp.getStdDev() / heightDisp.getMean();
 		
-		diversity /= 6;
-		
-		System.out.println(diversity);
+		return ret / 6;
 	}
 
 	public Crossover getCrossover(){
@@ -118,8 +115,8 @@ public class Algorithm {
 		return mutation;
 	}
 
-	public int getGeneration() {
-		return generation;
+	public int getGenerations() {
+		return data.getGenerations();
 	}
 
 	public List<CharacterChromosome> getChromosomes() {
@@ -127,7 +124,7 @@ public class Algorithm {
 	}
 
 	public CharacterChromosome getBestChromosome() {
-		return bestChromosome;
+		return data.getBestChromosome();
 	}
 
 	public void setChromosomes(List<CharacterChromosome> chromosomes) {

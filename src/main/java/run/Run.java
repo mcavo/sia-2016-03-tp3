@@ -35,6 +35,7 @@ import genetic_algorithm.substitution.Substitution1;
 import genetic_algorithm.substitution.Substitution2;
 import genetic_algorithm.substitution.Substitution3;
 import model.chromosome.CharacterChromosome;
+import model.data.Data;
 
 public class Run {
 	
@@ -305,8 +306,8 @@ public class Run {
 
 		Algorithm algorithm = new Algorithm(populator, stopCondition, mutation,
 				crossover, selection, substitution);
-		CharacterChromosome ans = algorithm.run();
-		System.out.println(ans);
+		Data ans = algorithm.run();
+		System.out.println(ans.getBestChromosome());
 	}
 
 }
