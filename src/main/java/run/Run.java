@@ -2,6 +2,12 @@ package run;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 
 import config.Configuration;
@@ -34,7 +40,6 @@ import genetic_algorithm.substitution.Substitution;
 import genetic_algorithm.substitution.Substitution1;
 import genetic_algorithm.substitution.Substitution2;
 import genetic_algorithm.substitution.Substitution3;
-import model.chromosome.CharacterChromosome;
 import model.data.Data;
 
 public class Run {
@@ -308,6 +313,27 @@ public class Run {
 				crossover, selection, substitution);
 		Data ans = algorithm.run();
 		System.out.println(ans.getBestChromosome());
+		
+		List<String> fitnessLines = new ArrayList<>();
+		List<String> diversityLines = new ArrayList<>();
+		for(int i = 0 ; i < ans.getGenerations() ; i++) {
+			fitnessLines.add(ans.getFitness().get(i).toString());
+			diversityLines.add(ans.getDiversity().get(i).toString());
+		}
+		Path fitnessFile = Paths.get("data/fitness.txt");
+		Path diversityFile = Paths.get("data/diversity.txt");
+		
+		try {
+			Files.write(fitnessFile, fitnessLines, Charset.forName("UTF-8"));
+			Files.write(diversityFile, diversityLines, Charset.forName("UTF-8"));
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
 	}
+
 
 }

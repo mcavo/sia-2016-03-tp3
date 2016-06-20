@@ -130,7 +130,5 @@ public class Algorithm {
 	public void setChromosomes(List<CharacterChromosome> chromosomes) {
 		this.chromosomes = chromosomes;
 	}
-	
-	
 
 }
