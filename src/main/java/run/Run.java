@@ -204,10 +204,13 @@ public class Run {
 			break;
 		case "NearOptimum" :
 			stopCondition = new AlgorithmStopConditionNearOptimum(Double.valueOf(parameter));
+			break;
 		case "NStructure" :
 			stopCondition = new AlgorithmStopConditionNStructure(Integer.valueOf(parameter));
+			break;
 		case "MinStructure" :
 			stopCondition = new AlgorithmStopConditionMinStructure(Double.valueOf(parameter));
+			break;
 		}
 		Substitution substitution = null;
 		Selection substitutionSelection = null;

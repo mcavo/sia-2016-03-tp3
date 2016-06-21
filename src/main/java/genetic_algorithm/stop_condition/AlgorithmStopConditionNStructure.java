@@ -12,14 +12,11 @@ public class AlgorithmStopConditionNStructure implements AlgorithmStopCondition 
 	public AlgorithmStopConditionNStructure(int limit) {
 		this.limit = limit;
 		this.counter = 0 ;
-		System.out.println("holaaa");
 	}
 	
 	@Override
 	public void setAlgorithm(Algorithm algorithm) {
 		this.algorithm = algorithm;
-		System.out.println("hola");
-		System.out.println(limit);
 	}
 
 	@Override
