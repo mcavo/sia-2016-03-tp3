@@ -51,7 +51,6 @@ public class Algorithm {
 		data.setBestChromosome(chromosomes.get(0));
 		data.addDiversityValue(refreshDiversity());
 		data.addFitnessValue(chromosomes.get(0).fitness());
-		
 		while (stopCondition.hasToContinue()) {
 			Collections.sort(chromosomes);
 			if(data.getBestChromosome().fitness()< chromosomes.get(0).fitness()){
@@ -61,8 +60,9 @@ public class Algorithm {
 			chromosomes = substitution.substitute();
 			data.addGeneration();
 			data.addDiversityValue(refreshDiversity());
+			System.out.println(data.getGenerations());
 		}
-
+		
 		return data;
 	}
 	

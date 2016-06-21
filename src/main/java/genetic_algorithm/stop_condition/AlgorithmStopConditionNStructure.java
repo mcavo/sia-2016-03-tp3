@@ -4,18 +4,22 @@ import genetic_algorithm.Algorithm;
 
 public class AlgorithmStopConditionNStructure implements AlgorithmStopCondition {
 	
-	private double minDiversity;
+	private final static double minDiversity = 1E-6;
 	private Algorithm algorithm;
 	private int counter = 0;
-	private final int LIMIT = 5;
+	private final int limit;
 
-	public AlgorithmStopConditionNStructure(double minDiversity) {
-		this.minDiversity = minDiversity;
+	public AlgorithmStopConditionNStructure(int limit) {
+		this.limit = limit;
+		this.counter = 0 ;
+		System.out.println("holaaa");
 	}
 	
 	@Override
 	public void setAlgorithm(Algorithm algorithm) {
 		this.algorithm = algorithm;
+		System.out.println("hola");
+		System.out.println(limit);
 	}
 
 	@Override
@@ -25,7 +29,7 @@ public class AlgorithmStopConditionNStructure implements AlgorithmStopCondition 
 		} else {
 			counter = 0;
 		}
-		return counter < LIMIT;
+		return counter < limit;
 	}
 
 }

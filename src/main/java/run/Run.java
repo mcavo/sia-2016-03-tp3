@@ -1,17 +1,5 @@
 package run;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Properties;
-
-import javax.swing.JFrame;
-
-import org.math.plot.Plot2DPanel;
-import org.math.plot.plotObjects.BaseLabel;
-
-import config.Configuration;
 import genetic_algorithm.Algorithm;
 import genetic_algorithm.crossover.AnularCrossover;
 import genetic_algorithm.crossover.Crossover;
@@ -34,14 +22,29 @@ import genetic_algorithm.selection.Selection;
 import genetic_algorithm.selection.UniversalSelection;
 import genetic_algorithm.stop_condition.AlgorithmStopCondition;
 import genetic_algorithm.stop_condition.AlgorithmStopConditionContent;
+import genetic_algorithm.stop_condition.AlgorithmStopConditionMinStructure;
 import genetic_algorithm.stop_condition.AlgorithmStopConditionNGenerations;
-import genetic_algorithm.stop_condition.AlgorithmStopConditionNearOptimum;
 import genetic_algorithm.stop_condition.AlgorithmStopConditionNStructure;
+import genetic_algorithm.stop_condition.AlgorithmStopConditionNearOptimum;
 import genetic_algorithm.substitution.Substitution;
 import genetic_algorithm.substitution.Substitution1;
 import genetic_algorithm.substitution.Substitution2;
 import genetic_algorithm.substitution.Substitution3;
+
+import java.awt.Color;
+import java.awt.Font;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
+
+import javax.swing.JFrame;
+
 import model.data.Data;
+
+import org.math.plot.Plot2DPanel;
+import org.math.plot.plotObjects.BaseLabel;
+
+import config.Configuration;
 
 public class Run {
 	
@@ -201,8 +204,10 @@ public class Run {
 			break;
 		case "NearOptimum" :
 			stopCondition = new AlgorithmStopConditionNearOptimum(Double.valueOf(parameter));
-		case "Structure" :
-			stopCondition = new AlgorithmStopConditionNStructure(Double.valueOf(parameter));
+		case "NStructure" :
+			stopCondition = new AlgorithmStopConditionNStructure(Integer.valueOf(parameter));
+		case "MinStructure" :
+			stopCondition = new AlgorithmStopConditionMinStructure(Double.valueOf(parameter));
 		}
 		Substitution substitution = null;
 		Selection substitutionSelection = null;
