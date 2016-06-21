@@ -4,6 +4,7 @@ import java.util.Collections;
 import java.util.List;
 
 import genetic_algorithm.crossover.Crossover;
+import genetic_algorithm.diversity.DiversityCalculator;
 import genetic_algorithm.mutation.Mutation;
 import genetic_algorithm.populator.CharacterChromosomePopulator;
 import genetic_algorithm.selection.Selection;
@@ -21,20 +22,23 @@ public class Algorithm {
 	private Selection selection;
 	private Crossover crossover;
 	private Substitution substitution;
+	private DiversityCalculator diversityCalculator;
 	private Data data;
 
 	private List<CharacterChromosome> chromosomes;
 
 	public Algorithm(CharacterChromosomePopulator populator,
 			AlgorithmStopCondition stopCondition, Mutation mutation,
-			Crossover crossover, Selection selection, Substitution substitution) {
+			Crossover crossover, Selection selection,
+			Substitution substitution, DiversityCalculator diversityCalculator) {
 		super();
 		this.populator = populator;
 		this.mutation = mutation;
 		this.selection = selection;
-		this.crossover = crossover;		
-		this.stopCondition = stopCondition;		
+		this.crossover = crossover;
+		this.stopCondition = stopCondition;
 		this.substitution = substitution;
+		this.diversityCalculator = diversityCalculator;
 		this.data = new Data();
 	}
 
@@ -45,65 +49,38 @@ public class Algorithm {
 		this.substitution.setAlgorithm(this);
 		this.crossover.setAlgorithm(this);
 		this.stopCondition.setAlgorithm(this);
-
-		Collections.sort(chromosomes);
+		this.diversityCalculator.setAlgorithm(this);
 		
+		Collections.sort(chromosomes);
+
 		data.setBestChromosome(chromosomes.get(0));
 		data.addDiversityValue(refreshDiversity());
 		data.addFitnessValue(chromosomes.get(0).fitness());
 		while (stopCondition.hasToContinue()) {
 			Collections.sort(chromosomes);
-			if(data.getBestChromosome().fitness()< chromosomes.get(0).fitness()){
+			if (data.getBestChromosome().fitness() < chromosomes.get(0)
+					.fitness()) {
 				data.setBestChromosome(chromosomes.get(0));
 			}
 			data.addFitnessValue(data.getBestChromosome().fitness());
 			chromosomes = substitution.substitute();
 			data.addGeneration();
 			data.addDiversityValue(refreshDiversity());
-			System.out.println(data.getGenerations());
 		}
-		
+
 		return data;
 	}
-	
+
 	public double getDiversity() {
-		return data.getDiversity().get(data.getDiversity().size()-1);
+		return data.getDiversity().get(data.getDiversity().size() - 1);
 	}
 
 	private double refreshDiversity() {
-		
-		double strengthDiv[] = new double[chromosomes.size()];
-		double expertiseDiv[] = new double[chromosomes.size()];
-		double agilityDiv[] = new double[chromosomes.size()];
-		double lifeDiv[] = new double[chromosomes.size()];
-		double resistanseDiv[] = new double[chromosomes.size()];
-		double heightDiv[] = new double[chromosomes.size()];
-		for(int i = 0 ; i < chromosomes.size() ; i++) {
-			strengthDiv[i] = chromosomes.get(i).getStrength();
-			expertiseDiv[i] = chromosomes.get(i).getExpertise();
-			agilityDiv[i] = chromosomes.get(i).getAgility();
-			lifeDiv[i] = chromosomes.get(i).getLife();
-			resistanseDiv[i] = chromosomes.get(i).getResistanse();
-			heightDiv[i] = chromosomes.get(i).getHeight();
-		}
-		ErrorDispersion strengthDisp = new ErrorDispersion(strengthDiv);
-		ErrorDispersion expertiseDisp = new ErrorDispersion(expertiseDiv);
-		ErrorDispersion agilityDisp = new ErrorDispersion(agilityDiv);
-		ErrorDispersion lifeDisp = new ErrorDispersion(lifeDiv);
-		ErrorDispersion resistanseDisp = new ErrorDispersion(resistanseDiv);
-		ErrorDispersion heightDisp = new ErrorDispersion(heightDiv);
-		
-		double ret = strengthDisp.getStdDev() / strengthDisp.getMean();
-		ret += expertiseDisp.getStdDev() / expertiseDisp.getMean();
-		ret += agilityDisp.getStdDev() / agilityDisp.getMean();
-		ret += lifeDisp.getStdDev() / lifeDisp.getMean();
-		ret += resistanseDisp.getStdDev() / resistanseDisp.getMean();
-		ret += heightDisp.getStdDev() / heightDisp.getMean();
-		
-		return ret / 6;
+
+		return diversityCalculator.calculateDiversity();
 	}
 
-	public Crossover getCrossover(){
+	public Crossover getCrossover() {
 		return crossover;
 	}
 

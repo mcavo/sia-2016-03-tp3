@@ -6,6 +6,9 @@ import genetic_algorithm.crossover.Crossover;
 import genetic_algorithm.crossover.OnePointCrossover;
 import genetic_algorithm.crossover.TwoPointCrossover;
 import genetic_algorithm.crossover.UniformCrossover;
+import genetic_algorithm.diversity.DiversityCalculator;
+import genetic_algorithm.diversity.ItemDiversityCalculator;
+import genetic_algorithm.diversity.StatDiversityCalculator;
 import genetic_algorithm.mutation.ClassicMutation;
 import genetic_algorithm.mutation.Mutation;
 import genetic_algorithm.mutation.NotUniformMutation;
@@ -317,9 +320,22 @@ public class Run {
 				break;
 			}
 		}
+		
+		DiversityCalculator diversityCalculator = null;
+		
+		type = prop.getProperty("diversityCalculator.type");
+		
+		switch(type){
+		case "StatDiversityCalculator":
+			diversityCalculator = new StatDiversityCalculator();
+			break;
+		case "ItemDiversityCalculator":
+			diversityCalculator = new ItemDiversityCalculator();
+			break;
+		}
 
 		Algorithm algorithm = new Algorithm(populator, stopCondition, mutation,
-				crossover, selection, substitution);
+				crossover, selection, substitution, diversityCalculator);
 		Data ans = algorithm.run();
 		System.out.println(ans.getBestChromosome());
 		
