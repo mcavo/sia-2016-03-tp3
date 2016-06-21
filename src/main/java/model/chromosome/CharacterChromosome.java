@@ -78,13 +78,14 @@ public class CharacterChromosome implements Chromosome, Comparable<CharacterChro
 		String ret = "Rol: " + Configuration.DEFAULT_CLASS + "\n\n";
 		ret += "Equipment:\n";
 		for (ItemType item : ItemType.values()) {
-			ret += "\t" + item.name() + ":\t" + genes.get(item.ordinal()) + "\n";
+			ret += "\t" + item.name() + ":\t\t" + genes.get(item.ordinal()) + "\n";
 		}
-		ret += "\nHeight: " + genes.get(HEIGHT_INDEX);
+		ret += "\nHeight:\t\t\t" + genes.get(HEIGHT_INDEX);
+		ret += "\n\n" + character.getCaracteristics();
 		ret += "\n\nStats:";
-		ret += "\n\tAttack:\t" + character.getAttack();
-		ret += "\n\tDefense: " + character.getDefense();
-		ret+= "\n\nFitness: " + fitness;
+		ret += "\n\tAttack:\t\t" + character.getAttack();
+		ret += "\n\tDefense:\t" + character.getDefense();
+		ret+= "\n\nFitness:\t\t" + fitness;
 		return ret;
 	}
 	

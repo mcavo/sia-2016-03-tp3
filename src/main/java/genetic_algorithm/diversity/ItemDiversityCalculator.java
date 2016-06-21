@@ -43,7 +43,7 @@ public class ItemDiversityCalculator implements DiversityCalculator {
 		ItemsRepo itemsRepo = ItemsRepo.getInstance();
 		for (Entry<Integer, Set<Double>> itemSlotDiversity : equipment
 				.entrySet()) {
-			diversity += ((double)itemSlotDiversity.getValue().size())
+			diversity += ((double)itemSlotDiversity.getValue().size()-1)
 					/ itemsRepo.size(ItemType.values()[itemSlotDiversity
 							.getKey()]);
 		}

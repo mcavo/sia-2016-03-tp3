@@ -108,8 +108,15 @@ public abstract class Character {
 	private double getItemDefenseModifier() {
 		return 2 + Math.pow((3*height - 5),4) - Math.pow((3*height - 5),2) - height/2;
 	}
-
-
-
+	
+	public String getCaracteristics() {
+		String ret = "Caracteristics:";
+		ret += "\n\tStregth:\t" + 0.01*itemStrenght*strengthItemModifier;
+		ret += "\n\tExpertise:\t" + 0.01*itemExpertise*expertiseItemModifier;
+		ret += "\n\tAgility:\t" + 0.01*itemAgility*agilityItemModifier;
+		ret += "\n\tLife:\t\t" + 0.01*itemLife*lifeItemModifier;
+		ret += "\n\tResistanse:\t" + 0.01*itemResistanse*resistanceItemModifier;
+		return ret;
+	}
 	
 }
