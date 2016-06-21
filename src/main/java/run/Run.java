@@ -7,6 +7,7 @@ import genetic_algorithm.crossover.OnePointCrossover;
 import genetic_algorithm.crossover.TwoPointCrossover;
 import genetic_algorithm.crossover.UniformCrossover;
 import genetic_algorithm.diversity.DiversityCalculator;
+import genetic_algorithm.diversity.FitnessDiversityCalculator;
 import genetic_algorithm.diversity.ItemDiversityCalculator;
 import genetic_algorithm.diversity.StatDiversityCalculator;
 import genetic_algorithm.mutation.ClassicMutation;
@@ -331,6 +332,9 @@ public class Run {
 			break;
 		case "ItemDiversityCalculator":
 			diversityCalculator = new ItemDiversityCalculator();
+			break;
+		case "FitnessDiversityCalculator":
+			diversityCalculator = new FitnessDiversityCalculator();
 			break;
 		}
 

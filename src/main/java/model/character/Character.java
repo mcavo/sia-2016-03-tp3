@@ -110,7 +110,7 @@ public abstract class Character {
 	}
 	
 	public String getCaracteristics() {
-		String ret = "Caracteristics:";
+		String ret = "Tanh coeficients:";
 		ret += "\n\tStregth:\t" + 0.01*itemStrenght*strengthItemModifier;
 		ret += "\n\tExpertise:\t" + 0.01*itemExpertise*expertiseItemModifier;
 		ret += "\n\tAgility:\t" + 0.01*itemAgility*agilityItemModifier;
