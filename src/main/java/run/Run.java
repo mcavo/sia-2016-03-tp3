@@ -36,7 +36,7 @@ import genetic_algorithm.stop_condition.AlgorithmStopCondition;
 import genetic_algorithm.stop_condition.AlgorithmStopConditionContent;
 import genetic_algorithm.stop_condition.AlgorithmStopConditionNGenerations;
 import genetic_algorithm.stop_condition.AlgorithmStopConditionNearOptimum;
-import genetic_algorithm.stop_condition.AlgorithmStopConditionStructure;
+import genetic_algorithm.stop_condition.AlgorithmStopConditionNStructure;
 import genetic_algorithm.substitution.Substitution;
 import genetic_algorithm.substitution.Substitution1;
 import genetic_algorithm.substitution.Substitution2;
@@ -202,7 +202,7 @@ public class Run {
 		case "NearOptimum" :
 			stopCondition = new AlgorithmStopConditionNearOptimum(Double.valueOf(parameter));
 		case "Structure" :
-			stopCondition = new AlgorithmStopConditionStructure(Double.valueOf(parameter));
+			stopCondition = new AlgorithmStopConditionNStructure(Double.valueOf(parameter));
 		}
 		Substitution substitution = null;
 		Selection substitutionSelection = null;
@@ -321,35 +321,43 @@ public class Run {
 	private void plot(Data data) {
 		double[] x = new double[data.getGenerations()];
 		double[] fitness = new double[data.getGenerations()];
-		//double[] diversity = new double[data.getGenerations()];
+		double[] diversity = new double[data.getGenerations()];
 		
 		Plot2DPanel plotFitness = new Plot2DPanel();
-		//Plot2DPanel plotDiversity = new Plot2DPanel();
+		Plot2DPanel plotDiversity = new Plot2DPanel();
 		
 		for(int i = 0 ; i < data.getGenerations() ; i++ ) {
 			x[i] = i+1;
 			fitness[i] = data.getFitness().get(i);
-			//diversity[i] = data.getDiversity().get(i);
+			diversity[i] = data.getDiversity().get(i);
 		}
 		
 		plotFitness.addLinePlot("Best chromosome fitness", x, fitness);
+		plotDiversity.addLinePlot("Diversity", x, diversity);
 		
 		BaseLabel title = new BaseLabel("Best chromosome fitness", Color.BLACK, 0.5, 1.1);
         title.setFont(new Font("Courier", Font.BOLD, 20));
         plotFitness.addPlotable(title);
         
+        BaseLabel titleD = new BaseLabel("Diversity", Color.BLACK, 0.5, 1.1);
+        titleD.setFont(new Font("Courier", Font.BOLD, 20));
+        plotDiversity.addPlotable(titleD);
+        
         
         // change name of axes
         plotFitness.setAxisLabels("Generations", "Fitness");
+        plotDiversity.setAxisLabels("Generations", "Diversity");
 
         // customize X axe
         // change axe title position relatively to the base of the plot
         plotFitness.getAxis(0).setLabelPosition(0.5, -0.15);
+        plotDiversity.getAxis(0).setLabelPosition(0.5, -0.15);
         
         
         // customize Y axe
         // change axe title position relatively to the base of the plot
         plotFitness.getAxis(1).setLabelPosition(-0.15, 0.5);
+        plotDiversity.getAxis(1).setLabelPosition(-0.15, 0.5);
 
 
 		// put the PlotPanel in a JFrame, as a JPanel
@@ -357,5 +365,10 @@ public class Run {
 		frameFitness.setSize(600, 600);
 		frameFitness.setContentPane(plotFitness);
 		frameFitness.setVisible(true);
+		
+		JFrame frameDiversity = new JFrame("a plot panel2");
+		frameDiversity.setSize(600, 600);
+		frameDiversity.setContentPane(plotDiversity);
+		frameDiversity.setVisible(true);
 	}
 }

@@ -2,12 +2,12 @@ package genetic_algorithm.stop_condition;
 
 import genetic_algorithm.Algorithm;
 
-public class AlgorithmStopConditionStructure implements AlgorithmStopCondition {
+public class AlgorithmStopConditionMinStructure implements AlgorithmStopCondition {
 	
 	private double minDiversity;
 	private Algorithm algorithm;
 
-	public AlgorithmStopConditionStructure(double minDiversity) {
+	public AlgorithmStopConditionMinStructure(double minDiversity) {
 		this.minDiversity = minDiversity;
 	}
 	
