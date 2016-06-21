@@ -35,6 +35,22 @@ public class ItemsRepo {
 		}
 		return instance;
 	}
+	
+	public int size(ItemType itemType){
+		switch (itemType) {
+		case BOOTS:
+			return boots.size();
+		case HELMET:
+			return helmets.size();
+		case WEAPON:
+			return weapons.size();
+		case CHEST:
+			return chests.size();
+		case GLOVES:
+			return gloves.size();
+		}
+		return 0;
+	}
 
 	public Item get(ItemType itemType, int index) {
 		switch (itemType) {
