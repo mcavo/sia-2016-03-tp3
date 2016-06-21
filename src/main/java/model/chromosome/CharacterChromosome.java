@@ -17,7 +17,7 @@ public class CharacterChromosome implements Chromosome, Comparable<CharacterChro
 	private static double MIN_HEIGHT = 1.3;
 	private static double MAX_HEIGHT = 2.0;
 	
-	private static Character character;
+	private Character character;
 	
 	private Double fitness;
 

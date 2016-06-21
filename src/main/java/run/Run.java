@@ -1,14 +1,15 @@
 package run;
 
+import java.awt.Color;
+import java.awt.Font;
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.charset.Charset;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Properties;
+
+import javax.swing.JFrame;
+
+import org.math.plot.Plot2DPanel;
+import org.math.plot.plotObjects.BaseLabel;
 
 import config.Configuration;
 import genetic_algorithm.Algorithm;
@@ -314,26 +315,47 @@ public class Run {
 		Data ans = algorithm.run();
 		System.out.println(ans.getBestChromosome());
 		
-		List<String> fitnessLines = new ArrayList<>();
-		List<String> diversityLines = new ArrayList<>();
-		for(int i = 0 ; i < ans.getGenerations() ; i++) {
-			fitnessLines.add(ans.getFitness().get(i).toString());
-			diversityLines.add(ans.getDiversity().get(i).toString());
-		}
-		Path fitnessFile = Paths.get("data/fitness.txt");
-		Path diversityFile = Paths.get("data/diversity.txt");
-		
-		try {
-			Files.write(fitnessFile, fitnessLines, Charset.forName("UTF-8"));
-			Files.write(diversityFile, diversityLines, Charset.forName("UTF-8"));
-			
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		
+		plot(ans);
 	}
+	
+	private void plot(Data data) {
+		double[] x = new double[data.getGenerations()];
+		double[] fitness = new double[data.getGenerations()];
+		//double[] diversity = new double[data.getGenerations()];
+		
+		Plot2DPanel plotFitness = new Plot2DPanel();
+		//Plot2DPanel plotDiversity = new Plot2DPanel();
+		
+		for(int i = 0 ; i < data.getGenerations() ; i++ ) {
+			x[i] = i+1;
+			fitness[i] = data.getFitness().get(i);
+			//diversity[i] = data.getDiversity().get(i);
+		}
+		
+		plotFitness.addLinePlot("Best chromosome fitness", x, fitness);
+		
+		BaseLabel title = new BaseLabel("Best chromosome fitness", Color.BLACK, 0.5, 1.1);
+        title.setFont(new Font("Courier", Font.BOLD, 20));
+        plotFitness.addPlotable(title);
+        
+        
+        // change name of axes
+        plotFitness.setAxisLabels("Generations", "Fitness");
+
+        // customize X axe
+        // change axe title position relatively to the base of the plot
+        plotFitness.getAxis(0).setLabelPosition(0.5, -0.15);
+        
+        
+        // customize Y axe
+        // change axe title position relatively to the base of the plot
+        plotFitness.getAxis(1).setLabelPosition(-0.15, 0.5);
 
 
+		// put the PlotPanel in a JFrame, as a JPanel
+		JFrame frameFitness = new JFrame("a plot panel");
+		frameFitness.setSize(600, 600);
+		frameFitness.setContentPane(plotFitness);
+		frameFitness.setVisible(true);
+	}
 }

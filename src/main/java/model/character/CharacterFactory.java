@@ -19,7 +19,7 @@ public class CharacterFactory {
 		case "Archer2" :
 			return new Archer2(height, equipment);
 		case "Assassin1" :
-			return new Assassin2(height, equipment);
+			return new Assassin1(height, equipment);
 		case "Assassin2" :
 			return new Assassin2(height, equipment);
 		case "Defensor1" :

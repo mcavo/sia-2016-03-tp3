@@ -20,7 +20,7 @@ public class ClassicMutation implements Mutation {
 			chromosome.getGenes().remove(position);
 			chromosome.getGenes().add(position, ItemsRepo.getInstance().getRandomIndex(ItemType.values()[position]));
 		}
-		return chromosome;
+		return new CharacterChromosome(chromosome.getGenes());
 	}
 
 }

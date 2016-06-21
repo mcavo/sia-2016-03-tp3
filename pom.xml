@@ -3,4 +3,11 @@
   <groupId>sia-2016-03-tp3</groupId>
   <artifactId>sia-2016-03-tp3</artifactId>
   <version>0.0.1-SNAPSHOT</version>
+  <dependencies>
+  	<dependency>
+      <groupId>com.github.yannrichet</groupId>
+      <artifactId>JMathPlot</artifactId>
+      <version>1.0.1</version>
+    </dependency>
+  </dependencies>
 </project>
