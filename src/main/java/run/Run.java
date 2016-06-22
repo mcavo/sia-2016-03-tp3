@@ -1,5 +1,17 @@
 package run;
 
+import java.awt.Color;
+import java.awt.Font;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
+
+import javax.swing.JFrame;
+
+import org.math.plot.Plot2DPanel;
+import org.math.plot.plotObjects.BaseLabel;
+
+import config.Configuration;
 import genetic_algorithm.Algorithm;
 import genetic_algorithm.crossover.AnularCrossover;
 import genetic_algorithm.crossover.Crossover;
@@ -34,21 +46,7 @@ import genetic_algorithm.substitution.Substitution;
 import genetic_algorithm.substitution.Substitution1;
 import genetic_algorithm.substitution.Substitution2;
 import genetic_algorithm.substitution.Substitution3;
-
-import java.awt.Color;
-import java.awt.Font;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Properties;
-
-import javax.swing.JFrame;
-
 import model.data.Data;
-
-import org.math.plot.Plot2DPanel;
-import org.math.plot.plotObjects.BaseLabel;
-
-import config.Configuration;
 
 public class Run {
 	
