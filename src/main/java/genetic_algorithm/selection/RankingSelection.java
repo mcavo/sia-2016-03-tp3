@@ -43,7 +43,7 @@ public class RankingSelection implements Selection {
 		for(int i=1; i<=n; i++){
 			double r = Math.random()*fitnessSum;
 			int j=0;
-			while(orders.get(j)>r){
+			while(j<orders.size()-1 && orders.get(j)>r){
 				j++;
 			}
 			selection.add(algorithm.getChromosomes().get(j));
